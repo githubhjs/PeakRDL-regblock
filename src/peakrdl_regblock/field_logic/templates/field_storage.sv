@@ -1,6 +1,6 @@
 {%- import 'field_logic/templates/counter_macros.sv' as counter_macros with context -%}
 // Field: {{node.get_path()}}
-always_comb begin
+always_comb begin : comb_`MACRO_TO_REPLACE_DOT_TO_DOUBLE_UNDERSCORE({{node.get_path()}}
     automatic logic [{{node.width-1}}:0] next_c = {{field_logic.get_storage_identifier(node)}};
     automatic logic load_next_c = '0;
 
@@ -42,7 +42,7 @@ always_comb begin
     {{field_logic.get_parity_error_identifier(node)}} = ({{field_logic.get_parity_identifier(node)}} != ^{{field_logic.get_storage_identifier(node)}});
     {%- endif %}
 end
-always_ff {{get_always_ff_event(resetsignal)}} begin
+always_ff {{get_always_ff_event(resetsignal)}} begin : seq_`MACRO_TO_REPLACE_DOT_TO_DOUBLE_UNDERSCORE({{node.get_path()}}
     {% if reset is not none -%}
     if({{get_resetsignal(resetsignal)}}) begin
         {{field_logic.get_storage_identifier(node)}} <= {{reset}};
